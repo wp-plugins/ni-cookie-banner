@@ -1,0 +1,544 @@
+<style>
+
+            h4
+            {
+                font-weight: bold;
+                margin: 10px 0px;
+            }
+            
+            h4.divider
+            {
+                color: #D44A44;
+                font-size: 12px;
+            }
+            
+            h4.seperator
+            {
+                color: #333333;
+                font-size: 14px;
+                border-bottom: 2px solid #333333;
+                padding-bottom: 15px;                
+            }
+
+            h5
+            {
+                font-size: 11px;
+                margin: 10px 0px;
+            }
+
+            .fullInput
+            {
+                width: 100%;
+            }
+            
+            .numberInput
+            {
+                width: 50px;
+            }
+
+            textarea
+            {
+                width: 100%;
+            }
+            
+            table
+            {
+                width: 98%;
+                border-left: 4px solid #7AD03A;
+                padding-left: 2%;
+                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+                background: white;
+                padding-bottom: 15px;
+            }
+
+            table td
+            {
+                width: 48%;
+                padding-right: 2%;
+            }
+            
+            .default
+            {
+                font-size: 8px;
+                font-style: italic;
+            }
+
+            .error
+            {
+                color: red;
+            }
+            
+            .success
+            {
+                color: green;
+            }
+
+            #NI_CookieBanner_Version
+            {
+                float: right;
+                border-left: 4px solid #7AD03A;
+                padding: 10px;
+                background: white;
+                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+            }
+            
+            #NI_CookieBanner_Version.beta
+            {
+                border-color: orange;
+            }
+            
+            .note
+            {
+                padding: 25px 0px 0px 0px;
+                color: green;
+            }
+            
+            .button.file
+            {
+                background: white;
+                padding: 0px !important;
+            }
+            
+            @media only screen and ( min-width : 0px ) and ( max-width : 600px ) { 
+
+                table, table td, table tr
+                {
+                    width: 100%;
+                    display: block;
+                }
+                
+            }
+            
+        </style>
+
+        <script>
+
+            jQuery( document ).ready( function( $ ) {
+
+                $( '.colourPicker' ).wpColorPicker( );
+
+            });
+
+        </script>
+
+        <div class="wrap">
+
+            <div id="NI_CookieBanner_Version" <?php echo NI_CookieBanner_Registry::get( 'config', 'is_beta' ) ? 'class="beta"' : ''; ?>>
+                <?php _e( 'Version' ); ?> <?php echo NI_CookieBanner_Registry::get( 'config', 'current_version' ); ?> 
+                <?php echo NI_CookieBanner_Registry::get( 'config', 'is_beta' ) ? 'Beta' : ''; ?>
+                
+            </div>
+          
+            <form action="" method="post" enctype="multipart/form-data">
+
+            <h2><?php _e( 'Cookie Banner Options', 'ni-cookie-banner' ); ?></h2>
+
+            <?php if ( $status = NI_CookieBanner_Status::get() )
+                echo self::statusBar( $status ); ?>
+            
+            <!-- 
+            
+                Text Options Section
+            
+            -->
+            
+            <h3><?php _e( 'Text Options', 'ni-cookie-banner' ); ?></h3>
+            
+            <table>
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Cookie Banner Text', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the main banner message displayed along the banner', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BanTxt" 
+                            id="NI_CB_BanTxt"
+                            class="fullInput"
+                            value="<?php echo isset( $data['NI_CB_BanTxt'] ) ? $data['NI_CB_BanTxt'] : ''; ?>"
+                            />
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Cookie Banner Button Text', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the text that goes inside the button that can be clicked to remove the banner', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnTxt" 
+                            id="NI_CB_BtnTxt"
+                            class="fullInput"
+                            value="<?php echo isset( $data['NI_CB_BtnTxt'] ) ? $data['NI_CB_BtnTxt'] : ''; ?>"
+                            />
+                        
+                    
+                    </td>
+                </tr>
+
+            </table> 
+           
+            
+            <!-- 
+            
+                Colour Options Section
+            
+            -->
+            
+            <h3><?php _e( 'Colour Options', 'ni-cookie-banner' ); ?></h3>
+            
+            <table>
+                
+                <tr>
+                    <td colspan="2">
+            
+                        <h4 class="seperator"><?php _e( 'Banner Colour Options', 'ni-cookie-banner' ); ?></h4>
+                        
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Banner Background Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the main banner background colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BanCol" 
+                            id="NI_CB_BanCol"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BanCol'] ) ? $data['NI_CB_BanCol'] : ''; ?>"
+                            />
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Banner Text Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the main banner text colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BanTxtCol" 
+                            id="NI_CB_BanTxtCol"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BanTxtCol'] ) ? $data['NI_CB_BanTxtCol'] : ''; ?>"
+                            />
+                        
+                    
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+            
+                        <h4 class="seperator"><?php _e( 'Button Colour Options', 'ni-cookie-banner' ); ?></h4>
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Button Background Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the button background colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnCol" 
+                            id="NI_CB_BtnCol"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BtnCol'] ) ? $data['NI_CB_BtnCol'] : ''; ?>"
+                            />
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Button Text Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the button text colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnTxtCol" 
+                            id="NI_CB_BtnTxtCol"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BtnTxtCol'] ) ? $data['NI_CB_BtnTxtCol'] : ''; ?>"
+                            />
+                        
+                    
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Button Background Hover Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the button background hover colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnColHov" 
+                            id="NI_CB_BtnColHov"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BtnColHov'] ) ? $data['NI_CB_BtnColHov'] : ''; ?>"
+                            />
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Button Text Hover Colour', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the button text hover colour', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnTxtColHov" 
+                            id="NI_CB_BtnTxtColHov"
+                            class="colourPicker wp-color-picker"
+                            value="<?php echo isset( $data['NI_CB_BtnTxtColHov'] ) ? $data['NI_CB_BtnTxtColHov'] : ''; ?>"
+                            />
+                        
+                    
+                    </td>
+                </tr>
+
+            </table>
+            
+            
+            <!-- 
+            
+                Animation Options Section
+            
+            -->
+            
+            <h3><?php _e( 'Animation Options', 'ni-cookie-banner' ); ?></h3>
+            
+            <table>
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Fade Out Delay', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the time in seconds that it will take for the banner to fade out', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_Delay" 
+                            id="NI_CB_Delay"
+                            class="numberInput"
+                            value="<?php echo isset( $data['NI_CB_Delay'] ) ? $data['NI_CB_Delay'] : ''; ?>"
+                            /> seconds
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Fade Out Time', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the delay in seconds that it will take for the banner to fade out', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_Fade" 
+                            id="NI_CB_Fade"
+                            class="numberInput"
+                            value="<?php echo isset( $data['NI_CB_Fade'] ) ? $data['NI_CB_Fade'] : ''; ?>"
+                            /> seconds
+                        
+                    
+                    </td>
+                </tr>
+
+            </table>
+            
+            <!-- 
+            
+                Style Options Section
+            
+            -->
+            
+            <h3><?php _e( 'Style Options', 'ni-cookie-banner' ); ?></h3>
+            
+            <table>
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Banner Height', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the total banner height in pixels, enter only a number', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BanHei" 
+                            id="NI_CB_BanHei"
+                            class="numberInput"
+                            value="<?php echo isset( $data['NI_CB_BanHei'] ) ? $data['NI_CB_BanHei'] : ''; ?>"
+                            /> px
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Button Height', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is the total button height in pixels', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="text" 
+                            name="NI_CB_BtnHei" 
+                            id="NI_CB_BtnHei"
+                            class="numberInput"
+                            value="<?php echo isset( $data['NI_CB_BtnHei'] ) ? $data['NI_CB_BtnHei'] : ''; ?>"
+                            /> px
+                        
+                    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Banner Position', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'This is where the banner will be displayed on the site', 'ni-cookie-banner' ); ?></h5>
+                       
+                        <select 
+                            name="NI_CB_Pos" 
+                            id="NI_CB_Pos" 
+                            >
+
+                            <option <?php echo $data['NI_CB_Pos'] == 'top' ? "selected='selected' " : ""; ?>value='top'>Top</option>
+                            <option <?php echo $data['NI_CB_Pos'] == 'bottom' ? "selected='selected' " : ""; ?>value='bottom'>Bottom</option>
+
+                        </select>
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( '', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( '', 'ni-cookie-banner' ); ?></h5>
+                    
+                    </td>
+                </tr>
+
+            </table>
+              
+            <!-- 
+            
+                Technical Options Section
+            
+            -->
+            
+            <h3><?php _e( 'Technical Settings', 'ni-cookie-banner' ); ?></h3>
+            
+            <table>
+                <tr>
+                    <td>
+                        
+                        <h4><?php _e( 'Minify output', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'Tick if you would like to minify the script/style output. Saves up to 50% in file size', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="checkbox" 
+                            name="NI_CB_Minify" 
+                            id="NI_CB_Minify"
+                            value="minify"
+                            <?php echo isset( $data['NI_CB_Minify'] ) && $data['NI_CB_Minify'] == 'minify' ? ' checked="checked" ' : ''; ?>
+                            />
+                        
+                    </td>
+                    <td>
+                       
+                        <h4><?php _e( 'Include script in footer', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'Tick if you would like to include your jQuery script in footer', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="checkbox" 
+                            name="NI_CB_Footer" 
+                            id="NI_CB_Footer"
+                            value="footer"
+                            <?php echo isset( $data['NI_CB_Footer'] ) && $data['NI_CB_Footer'] == 'footer' ? ' checked="checked" ' : ''; ?>
+                            />
+                    
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4><?php _e( 'Include CSS/JS as external files', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( 'Tick if you would like to include CSS and jQuery as external files', 'ni-cookie-banner' ); ?></h5>
+
+                        <input 
+                            type="checkbox" 
+                            name="NI_CB_External" 
+                            id="NI_CB_External"
+                            value="external"
+                            <?php echo isset( $data['NI_CB_External'] ) && $data['NI_CB_External'] == 'external' ? ' checked="checked" ' : ''; ?>
+                            />
+                    </td>
+                    <td>
+                        <h4><?php _e( '', 'ni-cookie-banner' ); ?></h4> 
+
+                        <h5><?php _e( '', 'ni-cookie-banner' ); ?></h5>
+
+                    </td>
+                </tr>
+
+            </table>
+            
+                <br /><br />
+
+                <input 
+                    type="submit" 
+                    class="button button-primary" 
+                    name="NI_CB_Submit" 
+                    value="<?php _e( 'Update Cookie Banner Options', 'ni-cookie-banner' ); ?>"
+                    />
+
+                <input 
+                    type="submit" 
+                    class="button" 
+                    name="NI_CB_Export" 
+                    value="<?php _e( 'Export Options', 'ni-cookie-banner' ); ?>"
+                    />
+                    
+                    <h3>Import Options</h3>
+
+                    <table>
+
+                        <tr>
+
+                            <td>
+
+                                <br />
+                                
+                                <input 
+                                    type="file" 
+                                    class="button file" 
+                                    name="NI_CB_ImportFile" 
+                                    value="<?php _e( 'Import File', 'ni-cookie-banner' ); ?>"
+                                    />
+
+                                <input 
+                                    type="submit" 
+                                    class="button" 
+                                    name="NI_CB_Import" 
+                                    value="<?php _e( 'Import Options', 'ni-cookie-banner' ); ?>"
+                                    />
+                            </td>
+
+                        </tr>
+
+                    </table>
+                
+            </form>
+
+        </div>
